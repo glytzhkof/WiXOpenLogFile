@@ -1,0 +1,1 @@
+msiexec.exe /i WixOpenLogFile.msi SHOWMESSAGEBOX=1 WIXFAILWHENDEFERRED=0

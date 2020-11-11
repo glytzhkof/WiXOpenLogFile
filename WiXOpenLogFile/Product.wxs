@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="WixOpenLogFile" Language="1033" Version="1.0.0.0"
+                  Manufacturer="Installdude.com" UpgradeCode="12341234-71d9-48ab-a3df-886d49965ea3">
+
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <MediaTemplate EmbedCab="yes" />
+
+    <UIRef Id="WixUI_MyMondo" />
+    <WixVariable Id="WixUILicenseRtf" Value="readme.rtf" />
+    
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Feature Id="ProductFeature" Title="WixOpenLogFile" Level="1" />
+
+    <!-- A custom bitmap for the error dialogs (to not cover whole dialog with image) -->
+    <Binary Id="MyOwnExitBitmap" SourceFile="myOwnExit.bmp" />
+
+    <!-- Set to 1 to trigger simulated installation failure - this triggers the FatalError exit dialog -->
+    <Property Id="WIXFAILWHENDEFERRED" Hidden="yes" Secure="yes">0</Property>
+    <CustomActionRef Id="WixFailWhenDeferred" />
+
+    <!-- C# custom action DLL -->
+    <Binary Id="CustomActions" SourceFile="$(var.WixOpenLogFileCAs.TargetDir)$(var.WixOpenLogFileCAs.TargetName).CA.dll" />
+
+    <!-- Custom action to open log file and to just show a message box (to halt setup so it can be cancelled to view UserExit dialog) -->
+    <CustomAction Id="OpenLog" BinaryKey="CustomActions" DllEntry="OpenLog" Execute="immediate" Return="ignore" />
+    <CustomAction Id="ShowMessageBox" BinaryKey="CustomActions" DllEntry="ShowMessageBox" Execute="immediate" Return="ignore" />
+    
+    <InstallExecuteSequence>
+      <!--Enable to be able to cancel setup and view UserExit dialog-->
+      <Custom Action='ShowMessageBox' After='InstallInitialize'>SHOWMESSAGEBOX=1</Custom>
+    </InstallExecuteSequence>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Test Folder">
+
+          <Component Feature="ProductFeature">
+            <File Source="$(env.SystemRoot)\notepad.exe" />
+          </Component>
+
+        </Directory>
+      </Directory>
+    </Directory>
+
+  </Product>
+</Wix>
+
+<!--
+
+Exit Dialogs:
+
+- ExitDialog
+- UserExit
+- FatalError
+
+-->

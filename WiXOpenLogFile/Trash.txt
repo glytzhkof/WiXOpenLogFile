@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="WiXOpenLogFile" Language="1033" Version="1.0.0.0" Manufacturer="" UpgradeCode="5bae2dbb-f842-464f-a47a-156f23727340">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="WiXOpenLogFile" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="WiXOpenLogFile" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			<!-- <Component Id="ProductComponent"> -->
+				<!-- TODO: Insert files, registry keys, and other resources here. -->
+			<!-- </Component> -->
+		</ComponentGroup>
+	</Fragment>
+</Wix>
+
+
+            //MessageBox.Show("Property MsiLogFileLocation: " + session["MsiLogFileLocation"]);
+
+
+    
+    <!--<DialogRef Id="ExitDialog">
+      <Control Id="OpenLogFile" Type="CheckBox" X="20" Y="207" Width="330" Height="18" CheckBoxValue="1" Property="PropertyOpenLogFile" Text="Open Log file">
+        --><!--<Condition Action="show">MsiLogFileLocation</Condition>--><!--
+        <Condition Action="hide">NOT MsiLogFileLocation</Condition>
+      </Control>
+    </DialogRef>-->
+
+
+
+
+
+	    <UI>
+
+      <Dialog Id="MyExitDialog" Width="370" Height="270" Title="!(loc.ExitDialog_Title)">
+          <Control Id="OpenLogFile" Type="CheckBox" X="20" Y="207" Width="330" Height="18" CheckBoxValue="1" Property="PropertyOpenLogFile" Text="Open Log file">
+          <Condition Action="show">MsiLogFileLocation</Condition>
+          <Condition Action="hide">NOT MsiLogFileLocation</Condition>
+        </Control>
+      </Dialog>
+
+      <UIRef Id="WixUI_Mondo" />
+      <!--<Publish Dialog="MyExitDialog" </Publish>-->
+    </UI>
+
+
+
+	    
+    <InstallUISequence>
+      <Show Dialog="MyExitDialog" OnExit="success" Overridable="yes" />
+    </InstallUISequence>
+
+    <AdminUISequence>
+      <Show Dialog="MyExitDialog" OnExit="success" Overridable="yes" />
+    </AdminUISequence>
+
+
+
+	        [CustomAction]
+        public static ActionResult CustomAction1(Session session)
+        {
+            session.Log("Begin CustomAction1");
+
+            return ActionResult.Success;
+        }
+
+
+
+
+
+		    <!--<CustomAction Id="ShowMessageBox" HideTarget="yes" BinaryKey="CustomActions" Execute="deferred" DllEntry="TestCustomAction" />-->
+
+
+
+
+			      <!--<Custom Action='ReadProperyDeferred' Before='InstallFinalize'></Custom>-->
+      <!--<Custom Action="CA_01_Verify" Before="CostInitialize"></Custom>-->
