@@ -17,6 +17,10 @@
 
     <!-- Set to 1 to trigger simulated installation failure - this triggers the FatalError exit dialog -->
     <Property Id="WIXFAILWHENDEFERRED" Hidden="yes" Secure="yes">0</Property>
+
+    <!-- Enable this property to create a log file automatically (unless you have logging policy on already) -->
+    <Property Id="MsiLogging">v</Property>
+    
     <CustomActionRef Id="WixFailWhenDeferred" />
 
     <!-- C# custom action DLL -->
