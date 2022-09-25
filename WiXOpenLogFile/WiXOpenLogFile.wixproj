@@ -27,7 +27,6 @@
     <Content Include="Batch Files\InstallClean.cmd" />
     <Content Include="Batch Files\InstallForceFailure.cmd" />
     <Content Include="Batch Files\InstallShowMessageBox.cmd" />
-    <Content Include="Trash.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WixOpenLogFileCAs\WixOpenLogFileCAs.csproj">
